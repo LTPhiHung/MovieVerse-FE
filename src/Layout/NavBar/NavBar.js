@@ -38,7 +38,7 @@ function NavBar() {
                     <NavLink to="/about-us" className={Hover}>
                         ABout Us
                     </NavLink>
-                    <NavLink to="/contact" className={Hover}>
+                    <NavLink to="/contact-us" className={Hover}>
                         Contact Us
                     </NavLink>
                     <NavLink to="/login" className={Hover}>

@@ -38,10 +38,10 @@ function AboutUs() {
                   </div>
               </div>
             </div>
-              <img 
-                src='./images/about2.jpg' 
-                alt='aboutus' 
-                className='w-full xl:block hidden h-header rounded-lg object-cover'/>
+            <img 
+              src='./images/about2.jpg' 
+              alt='aboutus' 
+              className='w-full xl:block hidden h-header rounded-lg object-cover'/>
           </div>
         </div>
       </div>
