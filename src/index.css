@@ -28,7 +28,7 @@ select:focus {
 .flex-rows {
   @apply flex flex-row justify-center items-center;
 }
-.fex-btn {
+.flex-btn {
   @apply flex justify-between items-center;
 }
 .transitions {
