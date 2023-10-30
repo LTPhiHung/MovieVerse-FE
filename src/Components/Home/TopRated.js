@@ -6,7 +6,7 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import { Movies } from '../../Data/MovieData';
 import { FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import Rating from './Stars';
+import Rating from '../Stars';
 
 function TopRated() {
     const [nextEl, setNextEl] = useState(null);
