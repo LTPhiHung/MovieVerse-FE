@@ -9,9 +9,11 @@ import SingleMovie from './Screens/SingleMovie';
 import WatchPage from './Screens/WatchPage';
 import Login from './Screens/Login';
 import Register from './Screens/Register';
-
+import Profile from './Screens/Dashboard/Profile';
+import Aos from 'aos'
 
 function App() {
+  Aos.init()
   return (
     <Routes>
       <Route path='/' element={<HomeScreen />} />
@@ -22,6 +24,7 @@ function App() {
       <Route path='/watch/:id' element={<WatchPage />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/profile' element={<Profile />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );
