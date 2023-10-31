@@ -10,7 +10,7 @@ function Profile() {
             <h2 className='text-xl font-bold'>Profile</h2>
             <Uploder />
             <Input 
-                label="Full Name" 
+                label="FullName" 
                 placeholder="MovieVerse React Tailwind" 
                 type="text" 
                 bg={true} 
