@@ -27,7 +27,7 @@ function Password() {
                 bg={true} 
             />
             <div className='flex justify-end items-center my-4'>
-                <button className='bg-main transitions hover:bg-subMain border border-subMain text-white py-3 px-6  rounded w-full sm:w-auto'>
+                <button className='bg-main transitions font-medium hover:bg-subMain border border-subMain text-white py-3 px-6  rounded w-full sm:w-auto'>
                     Change Password
                 </button>
             </div>

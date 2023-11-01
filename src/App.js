@@ -17,6 +17,7 @@ import MoviesList from './Screens/Dashboard/Admin/MovieList';
 import Dashboard from './Screens/Dashboard/Admin/Dashboard';
 import Categories from './Screens/Dashboard/Admin/Categories';
 import Users from './Screens/Dashboard/Admin/Users';
+import AddMovie from './Screens/Dashboard/Admin/AddMovie';
 
 function App() {
   Aos.init()
@@ -37,6 +38,7 @@ function App() {
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/Categories' element={<Categories />} />
       <Route path='/users' element={<Users />} />
+      <Route path='/addmovie' element={<AddMovie />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );
