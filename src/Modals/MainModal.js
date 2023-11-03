@@ -35,7 +35,12 @@ function MainModal({ modalOpen, setModalOpen, children}) {
                         {children}
                     </Transition.Child>
                     <div className='absolute right-5 top-5'>
-                        <button onClick={() => setModalOpen(false)} type='button' className='transitions w-10 h-10 flex-colo text-base text-subMain bg-white rounded-full hover:bg-subMain hover:text-white'>
+                        <button 
+                            onClick={() => 
+                            setModalOpen(false)} 
+                            type='button' 
+                            className='transitions w-10 h-10 flex-colo text-base text-subMain bg-white rounded-full hover:bg-subMain hover:text-white'
+                        >
                             <IoClose />
                         </button>
                     </div>
