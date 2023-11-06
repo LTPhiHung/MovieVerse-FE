@@ -64,7 +64,7 @@ function Register() {
                     />
                     <div className='w-full'>
                         <Input 
-                            label="Full Name" 
+                            label="FullName" 
                             placeholder="MovieVerse React Tailwind" 
                             type="text"  
                             name="fullName"
