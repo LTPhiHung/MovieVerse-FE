@@ -11,3 +11,4 @@ export const ErrorsACtion = (error, dispatch, action) => {
     }
     return dispatch({ type: action, payload: message });
 }
+
