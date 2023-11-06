@@ -2,26 +2,28 @@ import React, { useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Uploder from '../../Components/Uploder'
 import { Input } from '../../Components/UsedInputs'
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { set, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ProfileValidation } from '../../Components/Validation/UserValidation';
 import { InlineError } from '../../Components/Notifications/Error';
 import { Imagepreview } from '../../Components/Imagepreview';
-import { updateProfileAction } from '../../Redux/Actions/userActions';
+import { deleteProfileAction, updateProfileAction } from '../../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
 
 function Profile() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { userInfo } = useSelector(
         (state) => state.userLogin
     ); 
     const [imageUrl, setImageUrl] = useState(userInfo ? userInfo.image : "")
-        const  { isLoading, isError, isSuccess } = useSelector(
-            (state) => state.userUpdateProfile
-        );
+    const { isLoading, isError, isSuccess } = useSelector(
+        (state) => state.userUpdateProfile
+    );
+    const { isLoading: deleteLoading, isError: deleteError } = useSelector(
+        (state) => state.userDeleteProfile
+    );
+
     // validate user
     const {
         register,
@@ -32,9 +34,15 @@ function Profile() {
         resolver: yupResolver(ProfileValidation),
     })
 
-    // onSubmit
+    // update profile
     const onSubmit = (data) => {
         dispatch(updateProfileAction({ ...data, image: imageUrl }));
+    };
+
+    // delete profile
+    const deleteProfile = () => {
+        window.confirm("Are you sure you want to delete your profile?") &&
+        dispatch(deleteProfileAction());
     };
 
     // useEffect
@@ -47,11 +55,13 @@ function Profile() {
         if(isSuccess) {
             dispatch({ type: "USER_UPDATE_PROFILE_RESET"});
         }
-        if(isError) {
-            toast.error(isError);
+        if(isError || deleteError) {
+            toast.error(isError || deleteError);
+            dispatch({ type: "USER_UPDATE_PROFILE_RESET"});
+            dispatch({ type: "USER_DELETE_PROFILE_RESET" });
         }
 
-    }, [userInfo, setValue, isSuccess, isError, dispatch]);
+    }, [userInfo, setValue, isSuccess, isError, dispatch, deleteError]);
 
     return (
         <SideBar>
@@ -95,10 +105,17 @@ function Profile() {
                 }
     
                 <div className='flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4'>
-                    <button className='bg-subMain transitions font-medium hover:bg-main border border-subMain text-white py-3 px-6  rounded w-full sm:w-auto'>
-                        Delete Account
+                    <button
+                    onClick={deleteProfile}
+                        disabled={deleteLoading || isLoading}
+                        className='bg-subMain transitions font-medium hover:bg-main border border-subMain text-white py-3 px-6  rounded w-full sm:w-auto'
+                    >    
+                        {isLoading ? "Deleting..." : "Delete Account"}
                     </button>
-                    <button className='bg-main transitions font-medium hover:bg-subMain border border-subMain text-white py-3 px-6  rounded w-full sm:w-auto'>
+                    <button
+                        disabled={deleteLoading || isLoading}
+                        className='bg-main transitions font-medium hover:bg-subMain border border-subMain text-white py-3 px-6  rounded w-full sm:w-auto'
+                    >
                         {isLoading ? "Updating..." : "Update Profile"}
                     </button>
                 </div>

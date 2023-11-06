@@ -16,7 +16,7 @@ function Register() {
     const navigate = useNavigate();
 
     const { isLoading, isError, userInfo, isSuccess } = useSelector(
-        (state) => state.userLogin
+        (state) => state.userRegister
     ); 
 
     // validate user
