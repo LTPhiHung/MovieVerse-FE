@@ -1,0 +1,34 @@
+import * as moviesConstants from "../Constants/MoviesConstants";
+import * as moviesAPIs from "../APIs/MoviesServices";
+import toast from "react-hot-toast";
+import { ErrorsACtion, tokenProtection } from "../Protection";
+
+// get all movies action
+export const getAllMoviesAction = ({         
+    category = "",
+    time = "",
+    language = "",
+    rate = "",
+    year = "",
+    search = "",
+    pageNumber = ""
+}) => async (dispatch) => {
+    try {
+        dispatch({ type: moviesConstants.MOVIES_LIST_REQUEST });
+        const response = await moviesAPIs.getAllMoviesService(
+            category,
+            time,
+            language,
+            rate,
+            year,
+            search,
+            pageNumber 
+        );
+        dispatch({ 
+            type: moviesConstants.MOVIES_LIST_SUCCESS, 
+            payload: response 
+        });
+    } catch (error) {
+        ErrorsACtion(error, dispatch, moviesConstants.MOVIES_LIST_FAIL);  
+    }
+};
