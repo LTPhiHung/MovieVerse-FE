@@ -4,9 +4,10 @@ import Table2 from '../../../Components/Table2'
 import { HiPlusCircle } from 'react-icons/hi'
 import CategoryModal from '../../../Modals/CategoryModal'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllCategoriesAction } from '../../../Redux/Actions/CategoriesActions'
+import { deleteCategoryAction, getAllCategoriesAction } from '../../../Redux/Actions/CategoriesActions'
 import Loader from '../../../Components/Notifications/Loader'
 import { Empty } from '../../../Components/Notifications/Empty'
+import toast from 'react-hot-toast'
 
 function Categories() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -18,6 +19,15 @@ function Categories() {
         (state) => state.categoryGetAll
     );
 
+    // delete category
+    const { isSuccess, isError } = useSelector(
+        (state) => state.categoryDelete
+    );
+    const adminDeleteCategory = (id) => {
+        if (window.confirm("Are you sure you want to delete this category")) {
+            dispatch(deleteCategoryAction(id));
+        }
+    };
 
     const OnEditFunction = (id) => {
         setCategory(id);
@@ -27,10 +37,20 @@ function Categories() {
     useEffect(() => {
         // get all categories
         dispatch(getAllCategoriesAction())
-        if(modalOpen === false) {
+
+        if (isError) {
+            toast.error(isError);
+            dispatch({ type: "DELETE_CATEGORY_RESET" });
+        }
+
+        if (isSuccess) {
+            dispatch({ type: "DELETE_CATEGORY_RESET" });
+        }
+
+        if (modalOpen === false) {
             setCategory();
         }
-    }, [modalOpen, dispatch]);
+    }, [modalOpen, dispatch, isError, isSuccess]);
 
   return (
     <SideBar>
@@ -53,8 +73,13 @@ function Categories() {
             {
                 isLoading ? (
                     <Loader />
-                ) : categories.length > 0 ? ( 
-                    <Table2 data={categories} users={false}  OnEditFunction={OnEditFunction} />
+                ) : categories?.length > 0 ? ( 
+                    <Table2 
+                        data={categories} 
+                        users={false}  
+                        OnEditFunction={OnEditFunction} 
+                        onDeleteFunction={adminDeleteCategory}
+                    />
                 ) : (
                     <Empty message="You have no categories" />
                 )

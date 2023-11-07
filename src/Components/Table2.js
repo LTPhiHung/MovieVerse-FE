@@ -54,7 +54,10 @@ const Rows = ({ user, i, users, OnEditFunction, onDeleteFunction }) => {
                                 >
                                     Edit <FaEdit className='text-green-500' />
                                 </button>
-                                <button className='bg-subMain text-white rounded flex-colo w-6 h-6'>
+                                <button
+                                    onClick={() => onDeleteFunction(user?._id)}
+                                    className='bg-subMain text-white rounded flex-colo w-6 h-6'
+                                >
                                     <MdDelete/>
                                 </button>
                             </td>
