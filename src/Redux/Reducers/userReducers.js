@@ -81,3 +81,35 @@ export const userChangPasswordReducer = (state = {}, action) => {
             return state;
     }
 };
+
+// GET FAVORITE MOVIES
+export const userGetFavoriteMoviesReducer = (state = { likedMovies: [] }, action) => {
+    switch (action.type) {
+        case userConstants.USER_GET_FAVORITE_MOVIES_REQUEST:
+            return { isLoading: true };
+        case userConstants.USER_GET_FAVORITE_MOVIES_SUCCESS:
+            return { isLoading: false, likedMovies: action.payload };
+        case userConstants.USER_GET_FAVORITE_MOVIES_FAIL:
+            return { isLoading: false, isError: action.payload };
+        case userConstants.USER_GET_FAVORITE_MOVIES_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
+
+// DELETE FAVORITE MOVIES
+export const userDeleteFavoriteMoviesReducer = (state = {}, action) => {
+    switch (action.type) {
+        case userConstants.USER_DELETE_FAVORITE_MOVIES_REQUEST:
+            return { isLoading: true };
+        case userConstants.USER_DELETE_FAVORITE_MOVIES_SUCCESS:
+            return { isLoading: false, isSuccess: true };
+        case userConstants.USER_DELETE_FAVORITE_MOVIES_FAIL:
+            return { isLoading: false, isError: action.payload };
+        case userConstants.USER_DELETE_FAVORITE_MOVIES_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
