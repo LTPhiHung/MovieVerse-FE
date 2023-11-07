@@ -41,6 +41,7 @@ export const updateCategoryAction = (id, title) => async (dispatch, getState) =>
         );
         dispatch({ type: CategoriesConstants.UPDATE_CATEGORY_SUCCESS });
         toast.success("Category Updated successfully");
+        dispatch(getAllCategoriesAction());
     } catch (error) {
         ErrorsACtion(error, dispatch, CategoriesConstants.UPDATE_CATEGORY_FAIL);  
     }
@@ -57,6 +58,7 @@ export const deleteCategoryAction = (id) => async (dispatch, getState) => {
         );
         dispatch({ type: CategoriesConstants.DELETE_CATEGORY_SUCCESS });
         toast.success("Category Deleted successfully");
+        dispatch(getAllCategoriesAction());
     } catch (error) {
         ErrorsACtion(error, dispatch, CategoriesConstants.DELETE_CATEGORY_FAIL);  
     }
