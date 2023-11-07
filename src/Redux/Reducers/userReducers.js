@@ -1,7 +1,6 @@
 import * as userConstants from "../Constants/userConstants";
 
 // LOGIN
-
 export const userLoginReducer = (state = {}, action) => {
     switch (action.type) {
         case userConstants.USER_LOGIN_REQUEST:
@@ -20,7 +19,6 @@ export const userLoginReducer = (state = {}, action) => {
 }
 
 // REGISTER
-
 export const userRegisterReducer = (state = {}, action) => {
     switch (action.type) {
         case userConstants.USER_REGISTER_REQUEST:
@@ -37,7 +35,6 @@ export const userRegisterReducer = (state = {}, action) => {
 }
 
 // UPDATE PROFILE
-
 export const userUpdateProfileReducer = ( state = {}, action) => {
     switch (action.type) {
         case userConstants.USER_UPDATE_PROFILE_REQUEST:
@@ -54,7 +51,6 @@ export const userUpdateProfileReducer = ( state = {}, action) => {
 }
 
 // DELETE PROFILE
-
 export const userDeleteProfileReducer = ( state = {}, action) => {
     switch (action.type) {
         case userConstants.USER_DELETE_PROFILE_REQUEST:
@@ -69,3 +65,19 @@ export const userDeleteProfileReducer = ( state = {}, action) => {
             return state;
     }
 }
+
+// CHANGE PASSWORD
+export const userChangPasswordReducer = (state = {}, action) => {
+    switch (action.type) {
+        case userConstants.USER_CHANGE_PASSWORD_REQUEST:
+            return { isLoading: true };
+        case userConstants.USER_CHANGE_PASSWORD_SUCCESS:
+            return { isLoading: false, isSuccess: true, message: action.payload.message };
+        case userConstants.USER_CHANGE_PASSWORD_FAIL:
+            return { isLoading: false, isError: action.payload };
+        case userConstants.USER_CHANGE_PASSWORD_RESET:
+            return {};
+        default:
+            return state;
+    }
+};

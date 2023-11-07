@@ -3,7 +3,7 @@ import SideBar from './SideBar'
 import Uploder from '../../Components/Uploder'
 import { Input } from '../../Components/UsedInputs'
 import { useDispatch, useSelector } from 'react-redux';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ProfileValidation } from '../../Components/Validation/UserValidation';
 import { InlineError } from '../../Components/Notifications/Error';
@@ -81,29 +81,32 @@ function Profile() {
                         />
                     </div>
                 </div>
-                <Input 
-                    label="FullName" 
-                    placeholder="MovieVerse React Tailwind" 
-                    type="text"  
-                    name="fullName"
-                    register={register("fullName")}
-                    bg={true} 
-                />
-                {
-                    errors.fullName && <InlineError text={errors.fullName.message} />
-                }
-                <Input 
-                    label="Email" 
-                    placeholder="movieverse@gmail.com" 
-                    type="email" 
-                    name="email"
-                    register={register("email")}
-                    bg={true} 
-                />
-                {
-                    errors.email && <InlineError text={errors.email.message} />
-                }
-    
+                <div className='w-full'>
+                    <Input 
+                        label="FullName" 
+                        placeholder="MovieVerse React Tailwind" 
+                        type="text"  
+                        name="fullName"
+                        register={register("fullName")}
+                        bg={true} 
+                    />
+                    {
+                        errors.fullName && <InlineError text={errors.fullName.message} />
+                    }
+                </div>
+                <div className='w-full'>
+                    <Input 
+                        label="Email" 
+                        placeholder="movieverse@gmail.com" 
+                        type="email" 
+                        name="email"
+                        register={register("email")}
+                        bg={true} 
+                    />
+                    {
+                        errors.email && <InlineError text={errors.email.message} />
+                    }
+                </div>
                 <div className='flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4'>
                     <button
                     onClick={deleteProfile}

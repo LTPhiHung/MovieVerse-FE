@@ -68,10 +68,26 @@ const deleteProfileAction = () => async (dispatch, getState) => {
         ErrorsACtion(error, dispatch, userConstants.USER_DELETE_PROFILE_FAIL); 
     }
 }
+
+// change password action
+const changePasswordAction = (password) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: userConstants.USER_CHANGE_PASSWORD_REQUEST });
+        const response = await userApi.changePasswordService(
+            password,
+            tokenProtection(getState)
+        );
+        dispatch({ type: userConstants.USER_CHANGE_PASSWORD_SUCCESS, payload: response });
+    } catch (error) {
+        ErrorsACtion(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL); 
+    }
+}
+
 export {
     loginAction,
     registerAction,
     logoutAction,
     updateProfileAction,
-    deleteProfileAction 
+    deleteProfileAction,
+    changePasswordAction, 
 };
