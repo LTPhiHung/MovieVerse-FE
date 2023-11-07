@@ -86,13 +86,13 @@ const changePasswordAction = (password) => async (dispatch, getState) => {
 // get all favorite movie action
 const getFavoriteMoviesAction = () => async (dispatch, getState) => {
     try {
-        dispatch({ type: userConstants.USER_GET_FAVORITE_MOVIES_REQUEST });
-        const response = await userApi.getFavoriteMoviesService(
+        dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
+        const response = await userApi.getAllUsersService(
             tokenProtection(getState)
         );
-        dispatch({ type: userConstants.USER_GET_FAVORITE_MOVIES_SUCCESS, payload: response });
+        dispatch({ type: userConstants.GET_ALL_USERS_SUCCESS, payload: response });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_GET_FAVORITE_MOVIES_FAIL); 
+        ErrorsACtion(error, dispatch, userConstants.GET_ALL_USERS_FAIL); 
     }
 };
 
@@ -110,6 +110,34 @@ const deleteFavoriteMoviesAction = () => async (dispatch, getState) => {
     }
 };
 
+// admin get all users action
+const getAllUsersAction = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
+        const response = await userApi.getAllUsersService(
+            tokenProtection(getState)
+        );
+        dispatch({ type: userConstants.GET_ALL_USERS_SUCCESS, payload: response });
+    } catch (error) {
+        ErrorsACtion(error, dispatch, userConstants.GET_ALL_USERS_FAIL); 
+    }
+};
+
+// admin delete user action
+const deleteUserAction = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: userConstants.DELETE_USER_REQUEST });
+        await userApi.deleteUserService(id, 
+            tokenProtection(getState)
+        );
+        dispatch({ type: userConstants.DELETE_USER_SUCCESS });
+        toast.success("Favorite Movies Deleted");
+    } catch (error) {
+        ErrorsACtion(error, dispatch, userConstants.DELETE_USER_FAIL); 
+    }
+};
+
+
 export {
     loginAction,
     registerAction,
@@ -119,4 +147,6 @@ export {
     changePasswordAction, 
     getFavoriteMoviesAction,
     deleteFavoriteMoviesAction,
+    getAllUsersAction,
+    deleteUserAction,
 };

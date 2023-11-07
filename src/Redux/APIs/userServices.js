@@ -80,6 +80,26 @@ const deleteFavoriteMoviesService = async (token) => {
     return data;
 };
 
+// admin get all users
+const getAllUsersService = async (token) => {
+    const { data } = await Axios.get("/users", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return data; 
+};
+
+// admin get user
+const deleteUserService = async (id, token) => {
+    const { data } = await Axios.delete(`/users/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return data; 
+};
+
 export { 
     registerService,
     loginService,
@@ -89,4 +109,6 @@ export {
     changePasswordService, 
     getFavoriteMoviesService,
     deleteFavoriteMoviesService,
+    getAllUsersService,
+    deleteUserService,
 };
