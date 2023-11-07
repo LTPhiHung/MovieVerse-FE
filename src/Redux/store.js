@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import * as User from "./Reducers/userReducers";
-// import * as User from "./Reducers/userReducers";
+import * as categories from "./Reducers/CategoriesReducer";
 
 const rootReducer = combineReducers({
     // Add your reducers here
@@ -14,6 +14,12 @@ const rootReducer = combineReducers({
     userDeleteFavoriteMovies: User.userDeleteFavoriteMoviesReducer,
     adminGetAllUsers: User.adminGetAllUsersReducer,
     adminDeleteUser: User.adminDeleteUserReducer,
+
+    // categories reducers
+    categoryGetAll: categories.getAllCategoriesReducer,
+    categoryCreate: categories.createCategoryReducer,
+    categoryUpdate: categories.updateCategoryReducer,
+    categoryDelete: categories.deleteCategoryReducer,
 });
 
 // get userInfo from localStorage

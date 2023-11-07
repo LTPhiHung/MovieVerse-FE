@@ -25,12 +25,13 @@ const Rows = ({ user, i, users, OnEditFunction, onDeleteFunction }) => {
                                     />
                                 </div>
                             </td>
-                            <td className={`${Text} truncate`}>{user._id ? shortUppercaseId(user._id) : "2E75T8"}</td>
+                            <td className={`${Text} truncate`}>{user?._id ? shortUppercaseId(user._id) : "2E75T8"}</td>
                             <td className={`${Text}`}>{DateFormat(user?.createdAt)}</td>
-                            <td className={`${Text}`}>{user.fullName}</td>
-                            <td className={`${Text}`}>{user.email}</td>
+                            <td className={`${Text}`}>{user?.fullName}</td>
+                            <td className={`${Text}`}>{user?.email}</td>
+                            <td className={`${Text}`}>{user?.isAdmin ? "Admin" : "User"}</td>
                             <td className={`${Text} float-right flex-rows gap-2`}>
-                                {!user.isAdmin && (
+                                {!user?.isAdmin && (
                                     <button 
                                         onClick={() => onDeleteFunction(user?._id)}
                                         className='bg-subMain text-white rounded flex-colo w-6 h-6'
@@ -43,8 +44,8 @@ const Rows = ({ user, i, users, OnEditFunction, onDeleteFunction }) => {
                     ) : (
                         // Categories
                         <>
-                            <td className={`${Text} font-bold`}>2E75T8</td>
-                            <td className={`${Text}`}>{user.createAt ? user.createAt : '12, Jan 2023'}</td>
+                            <td className={`${Text} font-bold`}>{user?._id ? shortUppercaseId(user._id) : "2E75T8"}</td>
+                            <td className={`${Text}`}>{DateFormat(user?.createdAt)}</td>
                             <td className={`${Text}`}>{user.title}</td>
                             <td className={`${Text} float-right flex-rows gap-2`}>
                                 <button 
@@ -89,6 +90,9 @@ function Table2({ data, users, OnEditFunction, onDeleteFunction }) {
                                     <th scope='col' className={`${Head}`}>
                                         Email
                                     </th>
+                                    <th scope='col' className={`${Head}`}>
+                                        Role
+                                    </th>
                                 </>
                             ) :(
                                 <>
@@ -99,7 +103,7 @@ function Table2({ data, users, OnEditFunction, onDeleteFunction }) {
                                         Date
                                     </th>
                                     <th scope='col' className={`${Head}`}>
-                                        Title
+                                        Name
                                     </th>
                                 </>
                             )
