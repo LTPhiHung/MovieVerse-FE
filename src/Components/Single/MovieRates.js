@@ -71,7 +71,7 @@ function MovieRates({movie}) {
                 <div className='w-full flex flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll'>
                     {
                         UsersData.map((user, i) => (
-                            <div className='md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg'>
+                            <div key={i} className='md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg'>
                                 <div className='col-span-2 bg-main hidden md:block'>
                                     <img 
                                         src={`/images/${user ? user.image : 'user.png' }`}
