@@ -18,7 +18,7 @@ function MoviesPage() {
     const [times, setTimes] = useState(TimesData[0]);
     const [rates, setRates] = useState(RatesData[0]);
     const [language, setLanguage] = useState(LanguageData[0]);
-    const sameClass = "'text-white py-2 px-4 rounded font-semibold border-2 border-subMain hover:bg-subMain";
+    const sameClass = "text-white py-2 px-4 rounded font-semibold border-2 border-subMain hover:bg-subMain";
     // get all movies
     const { isLoading, isError, movies, pages, page } = useSelector(
         (state) => state.getAllMovies
