@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import SideBar from './SideBar'
 import Table from '../../Components/Table'
-import { Movies } from '../../Data/MovieData'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFavoriteMoviesAction, getFavoriteMoviesAction } from '../../Redux/Actions/userActions'
 import toast from 'react-hot-toast'
