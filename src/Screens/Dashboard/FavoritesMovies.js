@@ -49,15 +49,13 @@ function FavoritesMovies() {
                 }
                 
             </div>
-            {
-              isLoading ? (
-                <Loader />
-              ) : likedMovies.length > 0 ? ( 
-                <Table data={likedMovies} admin={false} />
-              ) : (
-                <Empty message="You have no favorites movies" />
-              )
-            }
+            {isLoading ? (
+              <Loader />
+            ) : likedMovies.length > 0 ? ( 
+              <Table data={likedMovies} admin={false} />
+            ) : (
+              <Empty message="You have no favorites movies" />
+            )}
         </div>
     </SideBar>
   )
