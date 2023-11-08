@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Filters from '../Components/Filters'
 import Movie from '../Components/Movie'
-import { CgSpinner } from 'react-icons/cg'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { TbPlayerTrackNext, TbPlayerTrackPrev } from 'react-icons/tb';
@@ -86,7 +85,6 @@ function MoviesPage() {
         setRates: setRates,
     };
 
-    console.log(search)
     return (
         <Layout>
             <div className='min-height-screen container mx-auto px-2 my-6'>

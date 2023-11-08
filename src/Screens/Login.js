@@ -26,7 +26,7 @@ function Login() {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(LoginValidation),
-    })
+    });
 
     // onSubmit
     const onSubmit = (data) => {
