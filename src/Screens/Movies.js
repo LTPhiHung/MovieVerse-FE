@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Filters from '../Components/Filters'
 import Movie from '../Components/Movie'
@@ -9,9 +9,15 @@ import { TbPlayerTrackNext, TbPlayerTrackPrev } from 'react-icons/tb';
 import Loader from '../Components/Notifications/Loader'
 import { RiMovie2Line } from 'react-icons/ri'
 import { getAllMoviesAction } from '../Redux/Actions/MoviesActions'
+import { YearData, TimesData, RatesData, LanguageData } from "../Data/FilterData";
 
 function MoviesPage() {
     const dispatch = useDispatch();
+    const [category, setCategory] = useState({title: "All Categories" });
+    const [year, setYear] = useState(YearData[0]);
+    const [times, setTimes] = useState(TimesData[0]);
+    const [rates, setRates] = useState(RatesData[0]);
+    const [language, setLanguage] = useState(LanguageData[0]);
     const sameClass = "'text-white py-2 px-4 rounded font-semibold border-2 border-subMain hover:bg-subMain";
     // get all movies
     const { isLoading, isError, movies, pages, page } = useSelector(
@@ -21,6 +27,20 @@ function MoviesPage() {
     const { categories } = useSelector(
         (state) => state.categoryGetAll
     );
+    console.log(categories)
+
+    // queries
+    const queries = useMemo(() => {
+        const query = {
+            category: category?.title === "All Categories" ? "" : category?.title,
+            times: times?.title.replace(/\D/g, ""),
+            language: language?.title === "Sort By Language" ? "" : language?.title,
+            rates: rates?.title.replace(/\D/g, ""),
+            year: year?.title.replace(/\D/g, ""),
+            search: "",
+        };
+        return query;
+    }, [category, language, year, times, rates]);
 
     // useEffect
     useEffect(() => {
@@ -28,12 +48,15 @@ function MoviesPage() {
         if (isError) {
             toast.error(isError);
         }
-    }, [dispatch, isError]);
+        // get all movies
+        dispatch(getAllMoviesAction(queries));
+    }, [dispatch, isError, queries]);
     
     // pagination next and prev pages
     const nextPage = () => {
         dispatch(
             getAllMoviesAction({
+                ...queries,
                 pageNumber: page + 1
             })
         );
@@ -42,15 +65,30 @@ function MoviesPage() {
     const prevPage = () => {
         dispatch(
             getAllMoviesAction({
+                ...queries,
                 pageNumber: page - 1
             })
         );
     };
 
+    const datas = {
+        categories: categories,
+        category: category,
+        setCategory: setCategory,
+        language: language,
+        setLanguage: setLanguage,
+        year: year,
+        setYear: setYear,
+        times: times,
+        setTimes: setTimes,
+        rates: rates,
+        setRates: setRates,
+    };
+
     return (
         <Layout>
             <div className='min-height-screen container mx-auto px-2 my-6'>
-                <Filters categories={categories} />
+                <Filters data={datas} />
                 <p className='text-lg font-medium my-6'>
                     Total{" "} 
                     <span className='font-bold text-subMain'>
