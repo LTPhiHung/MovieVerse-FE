@@ -8,3 +8,4 @@ npm i axios file-server moment react-hook-form react-hot-toast @hookform/resolve
 5/ Categories
 6/ Movies
 7/ Get Random, Recent & Top Rated Movies
+8/ Get Movie Details
