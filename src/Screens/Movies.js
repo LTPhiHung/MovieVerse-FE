@@ -125,7 +125,7 @@ function MoviesPage() {
                     ) :
                     (
                         <div className="w-full gp-6 flex-colo min-h-screen">
-                            <div className='w-34 h-24 p-5 rounded-full mb-4 bg-dry text-subMain text-4xl flex-colo'>
+                            <div className='w-24 h-24 p-5 rounded-full mb-4 bg-dry text-subMain text-4xl flex-colo'>
                                 <RiMovie2Line />
                             </div>
                             <p className='text-border text-sm'>
