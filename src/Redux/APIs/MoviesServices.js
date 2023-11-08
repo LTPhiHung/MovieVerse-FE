@@ -32,7 +32,7 @@ export const getMovieByIdService = async (id) => {
 export const getTopRatedMovieService = async () => {
     const { data } = await Axios.get("/movies/rated/top");
     return data;
-}
+};
 
 // review movie Function
 export const reviewMovieService = async (token, id, review) => {
@@ -42,4 +42,27 @@ export const reviewMovieService = async (token, id, review) => {
         },
     });
     return data;
-}
+};
+
+// delete movie Function
+export const deleteMovieService = async (token, id) => {
+    const { data } = await Axios.delete(`/movies/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return data;
+};
+
+
+// delete all movies Function
+export const deleteAllMoviesService = async (token) => {
+    const { data } = await Axios.delete(`/movies`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return data;
+};
+
+

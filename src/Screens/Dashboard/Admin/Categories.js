@@ -4,7 +4,7 @@ import Table2 from '../../../Components/Table2'
 import { HiPlusCircle } from 'react-icons/hi'
 import CategoryModal from '../../../Modals/CategoryModal'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCategoryAction, getAllCategoriesAction } from '../../../Redux/Actions/CategoriesActions'
+import { deleteCategoryAction } from '../../../Redux/Actions/CategoriesActions'
 import Loader from '../../../Components/Notifications/Loader'
 import { Empty } from '../../../Components/Notifications/Empty'
 import toast from 'react-hot-toast'
@@ -35,8 +35,8 @@ function Categories() {
     }
 
     useEffect(() => {
-        // get all categories
-        dispatch(getAllCategoriesAction())
+        // get all categories (get all categories by "dispatch(getAllCategoriesAction()" in App.js)
+        // dispatch(getAllCategoriesAction())
 
         if (isError) {
             toast.error(isError);
