@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ProfileValidation } from '../../Components/Validation/UserValidation';
 import { InlineError } from '../../Components/Notifications/Error';
-import { Imagepreview } from '../../Components/Imagepreview';
+import { Imagepreview } from '../../Components/ImagePreview';
 import { deleteProfileAction, updateProfileAction } from '../../Redux/Actions/userActions';
 import toast from 'react-hot-toast';
 

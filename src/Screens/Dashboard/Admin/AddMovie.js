@@ -2,146 +2,281 @@ import React, { useEffect, useState } from 'react'
 import SideBar from '../SideBar'
 import { Input, Message, Select } from '../../../Components/UsedInputs'
 import Uploder from '../../../Components/Uploder'
-import { CategoriesData } from '../../../Data/CategoriesData'
-import { UsersData } from '../../../Data/UserData'
+
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import { ImUpload } from 'react-icons/im'
 import CastsModal from '../../../Modals/CastsModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { movieValidation } from '../../../Components/Validation/MovieValidation'
+import { createMoviesAction, removeCastAction } from '../../../Redux/Actions/MoviesActions'
+import toast from 'react-hot-toast'
+import { InlineError } from '../../../Components/Notifications/Error'
+import { Imagepreview } from '../../../Components/ImagePreview'
 
 function AddMovie() {
     const [modalOpen, setModalOpen] = useState(false);
     const [cast, setCast] = useState(null);
+    const [imageWithoutTitle, setImageWithoutTitle] = useState("");
+    const [imageTitle, setImageTitle] = useState("");
+    const [videoUrl, setVideoUrl] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    // use Selectors
+    const { categories } = useSelector(
+        (state) => state.categoryGetAll
+    );
+    const { isLoading, isError, isSuccess } = useSelector(
+        (state) => state.createMovie
+    ); 
+
+    const { casts } = useSelector(
+        (state) => state.casts
+    );
+
+    // validate movie
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(movieValidation),
+    });
+
+    // onSubmit
+    const onSubmit = (data) => {
+        dispatch(
+            createMoviesAction({
+                ...data,
+                image: imageWithoutTitle,
+                titleImage: imageTitle,
+                video: videoUrl,
+                casts
+            })
+        );
+    };
+
+    // delete cast handler
+    const deleteCastHandler = (id) => {
+        dispatch(removeCastAction(id));
+        toast.success("Cast deleted successfully")
+    };
+
+    // useEffect
     useEffect(() => {
-        if(modalOpen === false) {
+        // if modal is false then reset cast
+        if (modalOpen === false) {
             setCast();
         }
-    }, [modalOpen]);
+        // if its success then reset form and navigate to addMovie
+        if (isSuccess) {
+            reset({
+                name: "",
+                time: 0,
+                language: "",
+                year: 0,
+                category: "",
+                desc: "",
+            });
+            setImageTitle("");
+            setImageWithoutTitle("");
+            setVideoUrl("");
+            dispatch({ type: "CREATE_MOVIE_RESET" });
+            navigate("/addMovie");
+        }
+        // if error then show error
+        if (isError) {
+            toast.error("Something went wrong");
+            dispatch({ type: "CREATE_MOVIE_RESET" });
+        }
+    }, [modalOpen, isSuccess, isError, dispatch, reset, navigate]);
 
-  return (
-    <SideBar>
-        <CastsModal modalOpen={modalOpen} setModalOpen={setModalOpen} cast={cast} />
-        <div className='flex flex-col gap-6'>
-            <h2 className='text-xl font-bold'>Create Movie</h2>
-            <div className='w-full grid md:grid-cols-2 gap-6'>
-                <Input 
-                    label="Movie Title" 
-                    placeholder="Game of Thrones" 
-                    type="text" 
-                    bg={true} 
-                />
-                <Input 
-                    label="Hours" 
-                    placeholder="2hr" 
-                    type="text" 
-                    bg={true} 
-                />
-            </div>
-            <div className='w-full grid md:grid-cols-2 gap-6'>
-                <Input 
-                    label="Language Used" 
-                    placeholder="English" 
-                    type="text" 
-                    bg={true} 
-                />
-                <Input 
-                    label="Year of Release" 
-                    placeholder="number" 
-                    type="text" 
-                    bg={true} 
-                />
-            </div>
-            {/* IMAGES */}
-            <div className='w-full grid md:grid-cols-2 gap-6'>
-                {/* img without title */}
-                <div className='flex flex-col gap-2'>
-                    <p className='text-border font-semibold text-sm'>
-                        Image without Title
-                    </p>
-                    <Uploder />
-                    <div className='w-32 h-32 p-2 bg-main border border-border rounded'>
-                        <img 
-                            src="/images/movies/90.jpeg" 
-                            alt="" 
-                            className='w-full h-full object-cover rounded' 
-                        />
-                    </div>
-                </div>
-                {/* image with title */}
-                <div className='flex flex-col gap-2'>
-                    <p className='text-border font-semibold text-sm'>
-                        Image with Title
-                    </p>
-                    <Uploder />
-                    <div className='w-32 h-32 p-2 bg-main border border-border rounded'>
-                        <img 
-                            src="/images/movies/80.jpeg" 
-                            alt="" 
-                            className='w-full h-full object-cover rounded' 
-                        />
-                    </div>
-                </div>
-            </div>
-            {/* DESCRIPTIONS */}
-            <Message 
-                label="Movie Description" 
-                placeholder="Make it short and sweet" 
+    return (
+        <SideBar>
+            <CastsModal 
+                modalOpen={modalOpen} 
+                setModalOpen={setModalOpen} 
+                cast={cast} 
             />
-            {/* CATEGORY */}
-            <div className='text-sm w-full'>
-                <Select label="Movie Category" options={CategoriesData} />
-            </div>
-            {/* MOVIE VIDEO */}
-            <div className='flex flex-col gap-2' w-full>
-                <label className='text-border font-semibold text-sm'>
-                    Movie Video
-                </label>
-                <Uploder />
-            </div>
-            {/* CASTS */}
-            <div className='w-full grid lg:grid-cols-2 gap-6 items-start'>
-                <button 
-                    onClick={() => setModalOpen(true)} 
-                    className='w-full py-4 bg-main border border-subMain border-dashed text-white rounded'
-                >
-                    Add Cast
-                </button>
-                <div className='grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-4 grid-cols-2 gap-4'>
-                    {
-                        UsersData.map((user, i) => (
-                            <div key={i} className='p-2 italic text-xs text-text rounded flex-colo bg-main border border-border'>
-                                <img 
-                                    src={`/images/${user.image ? user.image : "/images/user.png"}`}
-                                    alt={user.fullName}
-                                    className='w-full h-24 object-cover rounded mb-2' 
-                                />
-                                <p>{user.fullName}</p>
-                                <div className='flex-rows mt-2 w-full gap-2'>
-                                    <button className='w-6 h-6 flex-colo bg-dry border border-border text-subMain rounded'>
-                                        <MdDelete />
-                                    </button>
-                                    <button 
-                                        onClick={() => {
-                                            setCast(user);
-                                            setModalOpen(true);
-                                        }} 
-                                        className='w-6 h-6 flex-colo bg-dry border border-border text-green-600 rounded'>
-                                        <FaEdit />
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                    }
+            <div className='flex flex-col gap-6'>
+                <h2 className='text-xl font-bold'>Create Movie</h2>
+                <div className='w-full grid md:grid-cols-2 gap-6'>
+                    <div className='w-full'>
+                        <Input 
+                            label="Movie Title" 
+                            placeholder="Game of Thrones" 
+                            type="text"  
+                            name="name"
+                            register={register("name")}
+                            bg={true} 
+                        />
+                        {
+                            errors.name && <InlineError text={errors.name.message} />
+                        }
+                    </div>
+                    <div className='w-full'>
+                        <Input 
+                            label="Hours" 
+                            placeholder="2hr"
+                            type="number"  
+                            name="time"
+                            register={register("time")}
+                            bg={true} 
+                        />
+                        {
+                            errors.time && <InlineError text={errors.time.message} />
+                        }
+                    </div>
                 </div>
+                <div className='w-full grid md:grid-cols-2 gap-6'>
+                    <div className='w-full'>
+                        <Input 
+                            label="Language Used" 
+                            placeholder="English"
+                            type="text"  
+                            name="language"
+                            register={register("language")}
+                            bg={true} 
+                        />
+                        {
+                            errors.language && <InlineError text={errors.language.message} />
+                        }
+                    </div>
+                    <div className='w-full'>
+                        <Input 
+                            label="Year of Release" 
+                            placeholder="2022"
+                            type="number"  
+                            name="year"
+                            register={register("year")}
+                            bg={true} 
+                        />
+                        {
+                            errors.year && <InlineError text={errors.year.message} />
+                        }
+                    </div>
+                </div>
+
+                {/* IMAGES */}
+                <div className='w-full grid md:grid-cols-2 gap-6'>
+                    {/* img without title */}
+                    <div className='flex flex-col gap-2'>
+                        <p className='text-border font-semibold text-sm'>
+                            Image without Title
+                        </p>
+                        <Uploder setImageUrl={setImageTitle} />
+                        <Imagepreview image={imageTitle} name="imageTitle" />
+                    </div>
+                    {/* image with title */}
+                    <div className='flex flex-col gap-2'>
+                        <p className='text-border font-semibold text-sm'>
+                            Image with Title
+                        </p>
+                        <Uploder setImageUrl={setImageWithoutTitle} />
+                        <Imagepreview image={imageWithoutTitle} name="imageWithoutTitle" />
+                    </div>
+                </div>
+
+                {/* DESCRIPTIONS */}
+                <div className='w-full'>
+                    <Message 
+                        label="Movie Description" 
+                        placeholder="Make it short and sweet"
+                        name="desc"
+                        register={{...register("desc")}} 
+                    />
+                </div>
+
+                {/* CATEGORY */}
+                <div className='text-sm w-full'>
+                    <Select 
+                        label="Movie Category" 
+                        options={categories?.length > 0 ? categories : []}
+                        name="category"
+                        register={{...register("category")}}
+                    />
+                    {errors.category && <InlineError text={errors.category.message} />}
+                </div>
+
+                {/* MOVIE VIDEO */}
+                <div className='flex flex-col gap-2 w-full'>
+                    <label className='text-border font-semibold text-sm'>
+                        Movie Video
+                    </label>
+                    <div className={`w-full grid ${videoUrl && "md:grid-cols-2"} gap-6`}>
+                        {
+                            videoUrl && (
+                                <div className='w-full bg-main text-sm text-subMain py-4 border border-border rounded flex-colo'>
+                                    Video Upload!!!
+                                </div>
+                            )
+                        }
+                        <Uploder setImageUrl={setVideoUrl} />
+                    </div>
+                </div>
+
+                {/* CASTS */}
+                <div className='w-full grid lg:grid-cols-2 gap-6 items-start'>
+                    <button 
+                        onClick={() => setModalOpen(true)} 
+                        className='w-full py-4 bg-main border border-subMain border-dashed text-white rounded'
+                    >
+                        Add Cast
+                    </button>
+                    <div className='grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-4 grid-cols-2 gap-4'>
+                        {casts?.length > 0 &&  
+                            casts?.map((user) => (
+                                <div key={user.id} className='p-2 italic text-xs text-text rounded flex-colo bg-main border border-border'>
+                                    <img 
+                                        src={`${user?.image ? user.image : "/images/user.png"}`}
+                                        alt={user.name}
+                                        className='w-full h-24 object-cover rounded mb-2' 
+                                    />
+                                    <p>{user.name}</p>
+                                    <div className='flex-rows mt-2 w-full gap-2'>
+                                        <button 
+                                            onClick={() => deleteCastHandler(user?.id)}
+                                            className='w-6 h-6 flex-colo bg-dry border border-border text-subMain rounded'
+                                        >
+                                            <MdDelete />
+                                        </button>
+                                        <button 
+                                            onClick={() => {
+                                                setCast(user);
+                                                setModalOpen(true);
+                                            }} 
+                                            className='w-6 h-6 flex-colo bg-dry border border-border text-green-600 rounded'>
+                                            <FaEdit />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                {/* SUBMIT */}
+                <button
+                    // disabled={isLoading || !imageTitle || !imageWithoutTitle || !videoUrl}
+                    disabled={isLoading }
+                    onClick={handleSubmit(onSubmit)} 
+                    className='bg-subMain w-full flex-rows gap-6 font-medium text-white py-4 rounded'
+                >
+                    {isLoading ? (
+                        "Please wait..."
+                    ) : (
+                        <>
+                            <ImUpload /> Publish Movie
+                        </>
+                    )}
+                </button>
             </div>
-            {/* SUBMIT */}
-            <button className='bg-subMain w-full flex-rows gap-6 font-medium text-white py-4 rounded'>
-                <ImUpload /> Publish Movie
-            </button>
-        </div>
-    </SideBar>
-  )
+        </SideBar>
+    )
 }
 
 export default AddMovie

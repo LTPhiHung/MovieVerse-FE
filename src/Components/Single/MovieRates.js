@@ -7,7 +7,7 @@ import Rating from '../Stars'
 import { Empty } from '../Notifications/Empty'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ReviewValidation } from '../Validation/MovueValidation'
+import { ReviewValidation } from '../Validation/MovieValidation'
 import toast from 'react-hot-toast'
 import { InlineError } from '../Notifications/Error'
 import { Link } from 'react-router-dom'

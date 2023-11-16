@@ -1,7 +1,7 @@
 import * as userConstants from "../Constants/userConstants";
 import * as userApi from "../APIs/userServices";
 import toast from "react-hot-toast";
-import { ErrorsACtion, tokenProtection } from "../Protection";
+import { ErrorsAction, tokenProtection } from "../Protection";
 
 // login action
 const loginAction = (datas) => async (dispatch) => {
@@ -10,7 +10,7 @@ const loginAction = (datas) => async (dispatch) => {
         const response = await userApi.loginService(datas);
         dispatch({ type: userConstants.USER_LOGIN_SUCCESS, payload: response });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_LOGIN_FAIL)
+        ErrorsAction(error, dispatch, userConstants.USER_LOGIN_FAIL)
     }
 };
 
@@ -22,7 +22,7 @@ const registerAction = (datas) => async (dispatch) => {
         dispatch({ type: userConstants.USER_REGISTER_SUCCESS, payload: response });
         dispatch({ type: userConstants.USER_LOGIN_SUCCESS, payload: response });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_REGISTER_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.USER_REGISTER_FAIL); 
     }
 };
 
@@ -52,7 +52,7 @@ const updateProfileAction = (user) => async (dispatch, getState) => {
             payload: response,
         });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_UPDATE_PROFILE_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.USER_UPDATE_PROFILE_FAIL); 
     }
 };
 
@@ -65,7 +65,7 @@ const deleteProfileAction = () => async (dispatch, getState) => {
         toast.success("Profile Deleted");
         dispatch(logoutAction());
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_DELETE_PROFILE_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.USER_DELETE_PROFILE_FAIL); 
     }
 }
 
@@ -79,7 +79,7 @@ const changePasswordAction = (password) => async (dispatch, getState) => {
         );
         dispatch({ type: userConstants.USER_CHANGE_PASSWORD_SUCCESS, payload: response });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL); 
     }
 }
 
@@ -92,7 +92,7 @@ const getFavoriteMoviesAction = () => async (dispatch, getState) => {
         );
         dispatch({ type: userConstants.USER_GET_FAVORITE_MOVIES_SUCCESS, payload: response });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_GET_FAVORITE_MOVIES_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.USER_GET_FAVORITE_MOVIES_FAIL); 
     }
 };
 
@@ -106,7 +106,7 @@ const deleteFavoriteMoviesAction = () => async (dispatch, getState) => {
         dispatch({ type: userConstants.USER_DELETE_FAVORITE_MOVIES_SUCCESS });
         toast.success("Favorite Movies Deleted");
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.USER_DELETE_FAVORITE_MOVIES_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.USER_DELETE_FAVORITE_MOVIES_FAIL); 
     }
 };
 
@@ -119,7 +119,7 @@ const getAllUsersAction = () => async (dispatch, getState) => {
         );
         dispatch({ type: userConstants.GET_ALL_USERS_SUCCESS, payload: response });
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.GET_ALL_USERS_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.GET_ALL_USERS_FAIL); 
     }
 };
 
@@ -133,7 +133,7 @@ const deleteUserAction = (id) => async (dispatch, getState) => {
         dispatch({ type: userConstants.DELETE_USER_SUCCESS });
         toast.success("Favorite Movies Deleted");
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.DELETE_USER_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.DELETE_USER_FAIL); 
     }
 };
 
@@ -152,7 +152,7 @@ const likeMovieAction = (movieId) => async (dispatch, getState) => {
         toast.success("Added to your favorites");
         dispatch(getFavoriteMoviesAction())
     } catch (error) {
-        ErrorsACtion(error, dispatch, userConstants.LIKE_MOVIE_FAIL); 
+        ErrorsAction(error, dispatch, userConstants.LIKE_MOVIE_FAIL); 
     }
 };
 

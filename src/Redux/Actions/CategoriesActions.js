@@ -1,7 +1,7 @@
 import * as CategoriesConstants from "../Constants/categoriesConstants";
 import * as categoriesAPIs from "../APIs/CategoriesServices";
 import toast from "react-hot-toast";
-import { ErrorsACtion, tokenProtection } from "../Protection";
+import { ErrorsAction, tokenProtection } from "../Protection";
 
 // Get all Categories action
 export const getAllCategoriesAction = () => async (dispatch) => {
@@ -10,7 +10,7 @@ export const getAllCategoriesAction = () => async (dispatch) => {
         const data = await categoriesAPIs.getCategoriesService();
         dispatch({ type: CategoriesConstants.GET_ALL_CATEGORIES_SUCCESS, payload: data });
     } catch (error) {
-        ErrorsACtion(error, dispatch, CategoriesConstants.GET_ALL_CATEGORIES_FAIL);  
+        ErrorsAction(error, dispatch, CategoriesConstants.GET_ALL_CATEGORIES_FAIL);  
     }
 };
 
@@ -26,7 +26,7 @@ export const createCategoryAction = (title) => async (dispatch, getState) => {
         dispatch({ type: CategoriesConstants.CREATE_CATEGORY_SUCCESS });
         toast.success("Category created successfully");
     } catch (error) {
-        ErrorsACtion(error, dispatch, CategoriesConstants.CREATE_CATEGORY_FAIL);  
+        ErrorsAction(error, dispatch, CategoriesConstants.CREATE_CATEGORY_FAIL);  
     }
 };
 
@@ -43,7 +43,7 @@ export const updateCategoryAction = (id, title) => async (dispatch, getState) =>
         toast.success("Category Updated successfully");
         dispatch(getAllCategoriesAction());
     } catch (error) {
-        ErrorsACtion(error, dispatch, CategoriesConstants.UPDATE_CATEGORY_FAIL);  
+        ErrorsAction(error, dispatch, CategoriesConstants.UPDATE_CATEGORY_FAIL);  
     }
 };
 
@@ -60,7 +60,7 @@ export const deleteCategoryAction = (id) => async (dispatch, getState) => {
         toast.success("Category Deleted successfully");
         dispatch(getAllCategoriesAction());
     } catch (error) {
-        ErrorsACtion(error, dispatch, CategoriesConstants.DELETE_CATEGORY_FAIL);  
+        ErrorsAction(error, dispatch, CategoriesConstants.DELETE_CATEGORY_FAIL);  
     }
 };
 

@@ -39,6 +39,7 @@ function MoviesList() {
 
   // useEffect
   useEffect(() => {
+    // dispatch(getAllCategoriesAction())
     dispatch(getAllMoviesAction({}));
     // errors
     if (isError || deleteError || allError) {

@@ -20,7 +20,7 @@ function SideBar({children}) {
     ); 
 
      // logout function
-     const logoutHandler = () => {
+    const logoutHandler = () => {
         dispatch(logoutAction());
         toast.success("Logged out successfully");
         navigate("/login");

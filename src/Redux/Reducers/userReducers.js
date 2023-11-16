@@ -67,7 +67,7 @@ export const userDeleteProfileReducer = ( state = {}, action) => {
 }
 
 // CHANGE PASSWORD
-export const userChangPasswordReducer = (state = {}, action) => {
+export const userChangePasswordReducer = (state = {}, action) => {
     switch (action.type) {
         case userConstants.USER_CHANGE_PASSWORD_REQUEST:
             return { isLoading: true };

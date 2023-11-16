@@ -1,6 +1,6 @@
 import { logoutAction } from "./Actions/userActions";
 
-export const ErrorsACtion = (error, dispatch, action) => {
+export const ErrorsAction = (error, dispatch, action) => {
     const message = 
         error.response && error.response.data.message 
             ? error.response.data.message 
