@@ -14,7 +14,7 @@
     "aos": "^2.3.4",
     "axios": "^1.6.0",
     "bcryptjs": "^2.4.3",
-    "file-server": "^2.2.1",
+    "file-saver": "^2.0.5",
     "moment": "^2.29.4",
     "rc-drawer": "^6.5.2",
     "react": "^18.2.0",

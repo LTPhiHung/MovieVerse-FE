@@ -295,7 +295,7 @@ function EditMovie() {
                             className='bg-subMain w-full flex-rows gap-6 font-medium text-white py-4 rounded'
                         >
                             {isLoading ? (
-                                "Updating..."
+                                "Updating wait..."
                             ) : (
                                 <>
                                     <ImUpload /> Update Movie

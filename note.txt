@@ -15,3 +15,4 @@ npm i axios file-server moment react-hook-form react-hot-toast @hookform/resolve
 12/ Admin Dashboard
 13/ Delete Movie
 14/ Create Movie
+15/ Download Movie
